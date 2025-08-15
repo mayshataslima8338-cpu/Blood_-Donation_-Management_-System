@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #e53935;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #loginForm {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #e53935;
+            margin-bottom: 20px;
+        }
+
+        input[type="tel"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #e53935;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c62828;
+        }
+
+        .register-link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #e53935;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <form id="loginForm">
+        <div class="blood-logo">❤️</div>
+        <div class="title">Blood Donation Management System</div> 
+        <h2>Login</h2>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
+
+        <button type="submit">Login</button>
+
+        <div class="register-link">
+            New user? <a href="index.html">Register here</a>
+        </div>
+        <div class="blood-drop">💉</div>
+    </div>
+
+    <!-- Admin Login Button -->
+    <button class="admin-login-btn" onclick="window.location.href='admin-login.html'">Admin Login</button>
+  </div>
+  
+    </form>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+  apiKey: "AIzaSyCH81xSjRDP6WFNjcjj77j68rEz1erf1Fw",
+  authDomain: "blooddonationsystem-bf877.firebaseapp.com",
+  projectId: "blooddonationsystem-bf877",
+  storageBucket: "blooddonationsystem-bf877.firebasestorage.app",
+  messagingSenderId: "297033049797",
+  appId: "1:297033049797:web:89a2aaf80cc4cd908f72ac"
+};
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            let found = false;
+
+            const querySnapshot = await getDocs(collection(db, "users"));
+            querySnapshot.forEach((doc) => {
+                const user = doc.data();
+                if (user.phone === phone && user.password === password) {
+                    found = true;
+                }
+            });
+
+            if (found) {
+                alert("Login successful!");
+                window.location.href = "dashboard.html"; // Redirect to dashboard after successful login
+            } else {
+                alert("Invalid phone or password.");
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Donor List - Blood Donation System</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #b30000;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    header {
+      background-color: #800000;
+      padding: 25px;
+      font-size: 28px;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .donor-list {
+      margin: 30px auto;
+      max-width: 600px;
+      background-color: #ffcccc;
+      color: #4d0000;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .donor {
+      background-color: #fff0f0;
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: left;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .donor h3 {
+      margin: 0;
+      font-size: 20px;
+      color: #800000;
+    }
+
+    .donor p {
+      margin: 5px 0;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      color: white;
+      text-decoration: underline;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>🩸 Donor List 🩸</header>
+
+  <div class="donor-list" id="donorList">
+    <p>Loading donors...</p>
+  </div>
+
+  <a href="dashboard.html">← Back to Dashboard</a>
+
+  <script type="module">
+    // Firebase import links (modular SDK)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    // Your Firebase config (replace with your own config)
+    const firebaseConfig = {
+  apiKey: "AIzaSyCH81xSjRDP6WFNjcjj77j68rEz1erf1Fw",
+  authDomain: "blooddonationsystem-bf877.firebaseapp.com",
+  projectId: "blooddonationsystem-bf877",
+  storageBucket: "blooddonationsystem-bf877.firebasestorage.app",
+  messagingSenderId: "297033049797",
+  appId: "1:297033049797:web:89a2aaf80cc4cd908f72ac"
+};
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Get donor list where willingToDonate is "Yes"
+    const donorListDiv = document.getElementById("donorList");
+
+    async function loadDonors() {
+      const q = query(collection(db, "users"), where("willingToDonate", "==", "Yes"));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        donorListDiv.innerHTML = "<p>No willing to donors found.</p>";
+        return;
+      }
+
+      donorListDiv.innerHTML = ""; // Clear previous content
+
+      querySnapshot.forEach((doc) => {
+        const donor = doc.data();
+        const donorDiv = document.createElement("div");
+        donorDiv.className = "donor";
+
+        donorDiv.innerHTML = `
+          <h3>${donor.name}</h3>
+          <p><strong>Blood Group:</strong> ${donor.bloodGroup}</p>
+          <p><strong>Phone Number:</strong> ${donor.number}</p>
+        `;
+        donorListDiv.appendChild(donorDiv);
+      });
+    }
+
+    loadDonors();
+  </script>
+</body>
+</html>

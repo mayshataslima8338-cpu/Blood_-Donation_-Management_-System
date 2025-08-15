@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Page</title>
+  <style>
+      body {
+          margin: 0;
+          padding: 0;
+          background-color: #d61010; /* Red background */
+          font-family: Arial, sans-serif;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+
+      #registrationForm {
+          background-color: #fff;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+          width: 300px;
+      }
+
+      h2 {
+          text-align: center;
+          color: #e53935;
+          margin-bottom: 20px;
+      }
+
+      label {
+          font-weight: bold;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="tel"],
+      select {
+          width: 100%;
+          padding: 8px;
+          margin-top: 5px;
+          margin-bottom: 15px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+      }
+
+      input[type="radio"] {
+          margin-right: 5px;
+      }
+
+      button {
+          width: 100%;
+          padding: 10px;
+          background-color: #be1313;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          font-weight: bold;
+          cursor: pointer;
+      }
+
+      button:hover {
+          background-color: #c62828;
+      }
+  </style>
+</head>
+<body>
+    <h2>User Registration</h2>
+    <form id="registrationForm">
+      <label for="name">Full Name:</label><br>
+      <input type="text" id="name" required><br><br>
+
+      <label for="phone">Phone Number:</label><br>
+      <input type="tel" id="phone" required><br><br>
+
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" required><br><br>
+
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" required><br><br>
+
+      <label for="bloodGroup">Blood Group:</label><br>
+      <select id="bloodGroup" required>
+          <option value="">Select</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+      </select><br><br>
+
+      <label>Willing to Donate:</label><br>
+      <input type="radio" name="willing" value="Yes" required> Yes
+      <input type="radio" name="willing" value="No" required> No<br><br>
+
+      <button type="submit">Register</button>  
+
+      <div class="login-link">
+        Already a user? <a href="login.html">Login here</a>
+    </div>
+</form> 
+    </form>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
+
